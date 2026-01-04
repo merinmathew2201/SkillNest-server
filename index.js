@@ -2,6 +2,7 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+require('./config/db')
 
 // create express server using express
 const skillnestServer = express()
