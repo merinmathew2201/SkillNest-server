@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 require('./config/db')
+const router = require('./routing/router')
 
 // create express server using express
 const skillnestServer = express()
@@ -12,6 +13,9 @@ skillnestServer.use(cors())
 
 // use json parser 
 skillnestServer.use(express.json())
+
+// use router in server app
+skillnestServer.use(router)
 
 //create a port
 const PORT = 3000
