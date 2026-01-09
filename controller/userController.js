@@ -50,3 +50,35 @@ exports.loginController = async (req,res)=>{
     }
     
 }
+
+exports.googleLoginController = async (req,res)=>{
+    console.log("Inside GoogleloginController");
+    const {email,username,picture} = req.body
+    console.log(email,username,picture);
+    
+    try{
+        const existingUser = await users.findOne({email})
+        if(existingUser){
+            if ( existingUser.role === "educator") {
+                res.status(403).json("Educators must login using email & password")
+            }else{
+                // login
+                const token = jwt.sign({userMail:existingUser.email,role:existingUser.role},process.env.jwtSecret)
+                res.status(200).json({user:existingUser,token})
+            }
+            
+        }else{
+            // register
+            const newUser = await users.create({
+                username,email,password: "google-auth",role: "student",approvalStatus: true,picture
+            })
+            const token = jwt.sign({userMail:newUser.email,role:newUser.role},process.env.jwtSecret)
+            res.status(200).json({user:newUser,token})
+        }
+       
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    }
+    
+}
