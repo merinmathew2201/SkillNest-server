@@ -135,3 +135,33 @@ exports.removeUserController = async (req,res)=>{
         res.status(500).json(error)
     } 
 }
+
+// student profile info edit
+exports.updateProfileController = async (req,res)=>{
+    console.log("Inside updateProfileController");
+    const {id} = req.params
+    const {username,bio} = req.body
+    try {
+        const updatedUser = await users.findByIdAndUpdate(id,{ username, bio },{ new: true })
+        res.status(200).json(updatedUser)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
+    
+}
+
+// student password  edit
+exports.updatePasswordController = async (req,res)=>{
+    console.log("Inside updatePasswordController");
+    const {id} = req.params
+    const {password} = req.body
+    try {
+        const updatedUser = await users.findByIdAndUpdate(id,{ password },{ new: true })
+        res.status(200).json(updatedUser)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
+    
+}
