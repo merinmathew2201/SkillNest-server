@@ -51,6 +51,7 @@ exports.loginController = async (req,res)=>{
     
 }
 
+// google login
 exports.googleLoginController = async (req,res)=>{
     console.log("Inside GoogleloginController");
     const {email,username,picture} = req.body
@@ -81,4 +82,42 @@ exports.googleLoginController = async (req,res)=>{
         res.status(500).json(error)
     }
     
+}
+
+// get all users 
+exports.getAllUsersController = async (req,res)=>{
+    console.log("Inside getAllUsersController");
+    try{
+        const allUsers = await users.find({role:{$ne:"admin"}})
+        res.status(200).json(allUsers)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}
+
+// get all pending users 
+exports.getPendingUsersController = async (req,res)=>{
+    console.log("Inside getPendingUsersController");
+    try{
+        const pendingUsers = await users.find({role:"educator",approvalStatus:false})
+        res.status(200).json(pendingUsers)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}
+
+// approve educator status
+exports.approveEducatorController = async (req,res)=>{
+    console.log("Inside approveEducatorController");
+    // get id of educator from url
+    const {id} = req.params
+    try{
+        const updateEduator = await users.findByIdAndUpdate(id,{approvalStatus:true},{new:true})
+        res.status(200).json(updateEduator)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
 }
