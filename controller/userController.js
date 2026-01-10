@@ -121,3 +121,17 @@ exports.approveEducatorController = async (req,res)=>{
         res.status(500).json(error)
     } 
 }
+
+// delete user
+exports.removeUserController = async (req,res)=>{
+    console.log("Inside removeUserController");
+    // get id  from url
+    const {id} = req.params
+    try{
+        const removeUser = await users.findByIdAndDelete({_id:id})
+        res.status(200).json(removeUser)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}

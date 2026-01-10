@@ -24,5 +24,8 @@ router.get('/users/pending',adminMiddleware,userController.getPendingUsersContro
 // approve educator - admin
 router.put('/educator/:id/approve',adminMiddleware,userController.approveEducatorController)
 
+// delete user
+router.delete('/users/:id/remove',adminMiddleware,userController.removeUserController)
+
 
 module.exports = router
