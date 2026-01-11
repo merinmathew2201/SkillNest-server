@@ -44,3 +44,31 @@ exports.getPendingCoursesController = async (req,res)=>{
         res.status(500).json(error)
     } 
 }
+
+// approve educator status
+exports.approveCourseController = async (req,res)=>{
+    console.log("Inside approveEducatorController");
+    // get id of educator from url
+    const {id} = req.params
+    try{
+        const updateCourseStatus = await courses.findByIdAndUpdate(id,{courseApproved:true},{new:true})
+        res.status(200).json(updateCourseStatus)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}
+
+// delete course
+exports.removeCourseController = async (req,res)=>{
+    console.log("Inside removeCourseController");
+    // get id  from url
+    const {id} = req.params
+    try{
+        const removeCourse = await courses.findByIdAndDelete({_id:id})
+        res.status(200).json(removeCourse)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}

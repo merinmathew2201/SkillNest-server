@@ -50,5 +50,11 @@ router.get('/courses/all',adminMiddleware,courseController.getAllCoursesControll
 // all pending courses - admin
 router.get('/courses/pending',adminMiddleware,courseController.getPendingCoursesController)
 
+// approve Course - admin
+router.put('/course/:id/approve',adminMiddleware,courseController.approveCourseController)
+
+// delete Course
+router.delete('/course/:id/remove',adminMiddleware,courseController.removeCourseController)
+
 
 module.exports = router
