@@ -44,5 +44,11 @@ router.put('/educator/:id/approve',adminMiddleware,userController.approveEducato
 // delete user
 router.delete('/users/:id/remove',adminMiddleware,userController.removeUserController)
 
+// all courses - admin
+router.get('/courses/all',adminMiddleware,courseController.getAllCoursesController)
+
+// all pending courses - admin
+router.get('/courses/pending',adminMiddleware,courseController.getPendingCoursesController)
+
 
 module.exports = router

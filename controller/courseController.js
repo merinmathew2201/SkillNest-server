@@ -20,3 +20,27 @@ exports.createCourseController = async (req,res)=>{
         res.status(500).json(error)
     }
 }
+
+// get all courses
+exports.getAllCoursesController = async (req,res)=>{
+    console.log("Inside getAllCoursesController");
+    try{
+        const allCourses = await courses.find()
+        res.status(200).json(allCourses)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}
+
+// get all pending courses 
+exports.getPendingCoursesController = async (req,res)=>{
+    console.log("Inside getPendingCoursesController");
+    try{
+        const pendingCourses = await courses.find({courseApproved:false})
+        res.status(200).json(pendingCourses)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}

@@ -17,6 +17,9 @@ skillnestServer.use(express.json())
 // use router in server app
 skillnestServer.use(router)
 
+// to enable static file in server
+skillnestServer.use('/uploads',express.static('./uploads'))
+
 //create a port
 const PORT = 3000
 
