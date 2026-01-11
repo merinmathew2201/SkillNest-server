@@ -10,7 +10,7 @@ const jwtMiddleware = (req,res,next)=>{
         try {
             const jwtResponse = jwt.verify(token,process.env.jwtSecret)
             console.log(jwtResponse);
-            req.payload = jwtResponse.email
+            req.payload = jwtResponse.userMail
             next()
         } catch (error) {
             res.status(401).json("Authorization Failed!!!Invalid Token ...")

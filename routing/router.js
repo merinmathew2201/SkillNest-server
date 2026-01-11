@@ -2,6 +2,8 @@ const express = require('express')
 const userController = require('../controller/userController')
 const adminMiddleware = require('../middlewares/adminMiddleware')
 const jwtMiddleware = require('../middlewares/jwtMiddleware')
+const uploadMiddleware = require('../middlewares/uploadMiddleware')
+const courseController = require('../controller/courseController')
 
 const router = new express.Router()
 
@@ -17,11 +19,18 @@ router.post('/google-login',userController.googleLoginController)
 
 // ---------Authorised user-------
 
+// ------------user---------
+
 // user profile info edit - student
 router.put('/student/:id/edit-info', jwtMiddleware,userController.updateProfileController)
 
 // user password edit - student
 router.put('/student/:id/password', jwtMiddleware,userController.updatePasswordController)
+
+// --------educator-----
+router.post('/educator/course/create',jwtMiddleware,uploadMiddleware.single('thumbnail'),courseController.createCourseController)
+
+// ---------admin----------
 
 // all users - admin
 router.get('/users/all',adminMiddleware,userController.getAllUsersController)
