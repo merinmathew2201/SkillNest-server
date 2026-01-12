@@ -72,3 +72,18 @@ exports.removeCourseController = async (req,res)=>{
         res.status(500).json(error)
     } 
 }
+
+// get all educator created course
+exports.getEducatorCoursesController = async(req,res)=>{
+    console.log("Inside getEducatorCoursesController ");
+    try {
+        const educatorMail = req.payload
+        const educatorCourses = await courses.find({educatorMail})
+        res.status(200).json(educatorCourses)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error)
+        
+    }
+    
+}
