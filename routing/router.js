@@ -5,6 +5,7 @@ const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const uploadMiddleware = require('../middlewares/uploadMiddleware')
 const courseController = require('../controller/courseController')
 const adminController = require('../controller/adminController')
+const sectionController = require('../controller/sectionController')
 
 const router = new express.Router()
 
@@ -34,6 +35,18 @@ router.post('/educator/course/create',jwtMiddleware,uploadMiddleware.single('thu
 
 // get educator created courses
 router.get('/educator/courses',jwtMiddleware,courseController.getEducatorCoursesController)
+
+// get educator created single course
+router.get('/educator/courses/:courseId',jwtMiddleware,courseController.getSingleCourseController)
+
+// create section for course
+router.post('/course/add-section',jwtMiddleware,sectionController.addSectionController)
+
+// get all sections
+router.get('/courses/:courseId/sections',jwtMiddleware,sectionController.getSectionsController)
+
+// delete section
+router.delete('/section/:sectionId/remove',jwtMiddleware,sectionController.removeSectionController)
 
 // ---------admin----------
 

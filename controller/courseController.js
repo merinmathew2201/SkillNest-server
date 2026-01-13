@@ -87,3 +87,16 @@ exports.getEducatorCoursesController = async(req,res)=>{
     }
     
 }
+
+// get all courses
+exports.getSingleCourseController = async (req,res)=>{
+    console.log("Inside getSingleCourseController");
+    const {courseId} = req.params
+    try{
+        const singleCourse = await courses.findById(courseId)
+        res.status(200).json(singleCourse)
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+    } 
+}
