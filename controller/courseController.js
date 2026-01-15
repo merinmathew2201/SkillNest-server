@@ -100,3 +100,17 @@ exports.getSingleCourseController = async (req,res)=>{
         res.status(500).json(error)
     } 
 }
+
+// publish course
+exports.publishCourseController = async (req, res) => {
+  const { courseId } = req.params
+
+  try {
+    const updatedCourse = await courses.findByIdAndUpdate(courseId,{ isPublished: true },{ new: true })
+
+    res.status(200).json(updatedCourse)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}

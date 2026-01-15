@@ -6,6 +6,11 @@ const uploadMiddleware = require('../middlewares/uploadMiddleware')
 const courseController = require('../controller/courseController')
 const adminController = require('../controller/adminController')
 const sectionController = require('../controller/sectionController')
+const videoUploadMiddleware = require('../middlewares/videoUploadMiddleware')
+const lectureController = require('../controller/lectureController')
+const resourceController = require('../controller/resourceController')
+const pdfUploadMiddleware = require('../middlewares/pdfUploadMiddleware')
+const enrollmentController = require('../controller/enrollmentController')
 
 const router = new express.Router()
 
@@ -47,6 +52,35 @@ router.get('/courses/:courseId/sections',jwtMiddleware,sectionController.getSect
 
 // delete section
 router.delete('/section/:sectionId/remove',jwtMiddleware,sectionController.removeSectionController)
+
+// create lecture
+router.post('/sections/add-lecture',jwtMiddleware,videoUploadMiddleware.single('videoURL'),lectureController.addLectureController)
+
+// get lectures
+router.get("/sections/:sectionId/lectures",jwtMiddleware,lectureController.getLecturesBySectionController)
+
+// remove lecture
+router.delete("/lecture/delete/:lectureId",jwtMiddleware,lectureController.removeLectureController)
+
+// create resourse
+router.post("/courses/add-resources",jwtMiddleware,pdfUploadMiddleware.single("fileURL"),resourceController.addResourceController)
+
+// get  resourse of course
+router.get("/courses/:courseId/resources",jwtMiddleware,resourceController.getResourcesByCourseController) 
+
+// delete resourse
+router.delete("/resources/:resourceId/remove",jwtMiddleware,resourceController.removeResourceController)
+
+// get enrolled students 
+router.get("/courses/:courseId/students",jwtMiddleware,enrollmentController.getCourseStudentsController)
+
+// get dashboard stats
+router.get("/educator/dashboard-stats", jwtMiddleware, enrollmentController.getEducatorDashboardStats)
+
+// publish course
+router.put("/course/publish/:courseId",jwtMiddleware,courseController.publishCourseController)
+
+
 
 // ---------admin----------
 
