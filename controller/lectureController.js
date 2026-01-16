@@ -53,3 +53,18 @@ exports.removeLectureController = async (req, res) => {
   }
 }
 
+// get preview lecture
+exports.getPreviewLecturesController = async (req, res) => {
+  console.log("Inside getPreviewLecturesController")
+
+  const { courseId } = req.params
+
+  try {
+    const previewLectures = await lectures.find({courseId,isPreview: true})
+
+    res.status(200).json(previewLectures)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}

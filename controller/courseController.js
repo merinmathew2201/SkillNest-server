@@ -21,7 +21,7 @@ exports.createCourseController = async (req,res)=>{
     }
 }
 
-// get all courses
+// get all courses - admin
 exports.getAllCoursesController = async (req,res)=>{
     console.log("Inside getAllCoursesController");
     try{
@@ -33,7 +33,7 @@ exports.getAllCoursesController = async (req,res)=>{
     } 
 }
 
-// get all pending courses 
+// get all pending courses -admin
 exports.getPendingCoursesController = async (req,res)=>{
     console.log("Inside getPendingCoursesController");
     try{
@@ -114,3 +114,45 @@ exports.publishCourseController = async (req, res) => {
     res.status(500).json(error)
   }
 }
+
+// get latest courses in home page
+exports.getLatestCoursesController = async (req, res) => {
+  try {
+    const latestCourses = await courses.find({ isPublished: true }).sort({ createdAt: -1 }) .limit(6)
+
+    res.status(200).json(latestCourses)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+// get all published courses (with search)
+exports.getAllPublishedCoursesController = async (req, res) => {
+  console.log("Inside getAllPublishedCoursesController")
+
+  const searchKey = req.query.search 
+
+  try {
+    const allCourses = await courses.find({isPublished: true,title: { $regex: searchKey, $options: "i" }}).sort({ createdAt: -1 })
+    res.status(200).json(allCourses)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+// student - view course
+exports.getSinglePublishedCourseController = async (req, res) => {
+  const { courseId } = req.params
+  try {
+    const course = await courses.findOne({_id: courseId,isPublished: true})
+    if (course) {
+        res.status(200).json(course)
+    }
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+

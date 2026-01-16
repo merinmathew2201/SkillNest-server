@@ -4,6 +4,7 @@ const express = require('express')
 const cors = require('cors')
 require('./config/db')
 const router = require('./routing/router')
+const path = require('path')
 
 // create express server using express
 const skillnestServer = express()
@@ -17,8 +18,18 @@ skillnestServer.use(express.json())
 // use router in server app
 skillnestServer.use(router)
 
-// to enable static file in server
+
 skillnestServer.use('/uploads',express.static('./uploads'))
+
+// skillnestServer.use(
+//   '/uploads/images',
+//   express.static(path.join(__dirname, 'uploads/images'))
+// )
+
+// skillnestServer.use(
+//   '/uploads/videos',
+//   express.static(path.join(__dirname, 'uploads/videos'))
+// )
 
 //create a port
 const PORT = 3000

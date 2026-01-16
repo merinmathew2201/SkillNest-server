@@ -23,16 +23,40 @@ router.post('/login',userController.loginController)
 // google login
 router.post('/google-login',userController.googleLoginController)
 
+// get home courses
+router.get('/courses/home',courseController.getLatestCoursesController)
+
 
 // ---------Authorised user-------
 
-// ------------user---------
+// ------------student---------
 
 // user profile info edit - student
 router.put('/student/:id/edit-info', jwtMiddleware,userController.updateProfileController)
 
 // user password edit - student
 router.put('/student/:id/password', jwtMiddleware,userController.updatePasswordController)
+
+// all published courses 
+router.get('/student/courses',jwtMiddleware,courseController.getAllPublishedCoursesController)
+
+// get a single published course
+router.get("/student/course/:courseId", jwtMiddleware,courseController.getSinglePublishedCourseController)
+
+// get preview video 
+router.get("/lectures/preview/:courseId", jwtMiddleware,lectureController.getPreviewLecturesController)
+
+// enroll course-payment
+router.post("/course/:courseId/enroll", jwtMiddleware, enrollmentController.coursePaymentController)
+
+// enroll course creation
+router.post("/course/enroll/success",jwtMiddleware,enrollmentController.enrollCourseController)
+
+// student enrolled course
+router.get("/student/enrolled-courses", jwtMiddleware, enrollmentController.getEnrolledCoursesController)
+
+
+
 
 // --------educator-----
 // create course
